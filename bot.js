@@ -105,8 +105,6 @@ message.author.send(".Best Commands" + `  **
 });
 
 
-
-// ^ping
    client.on('message', message => {
      if (message.content === "^ping") {
       const embed = new Discord.RichEmbed()
@@ -118,7 +116,7 @@ message.author.send(".Best Commands" + `  **
     }
 });
 
-// ^say
+
 var prefix = "^";
 client.on('message', message => {
   if (message.author.bot) return;
@@ -129,7 +127,6 @@ client.on('message', message => {
 
   let args = message.content.split(" ").slice(1);
 
-// ^say
   if (command === "say") {
           message.delete()
     message.channel.sendMessage(args.join(" ")).catch(console.error);
