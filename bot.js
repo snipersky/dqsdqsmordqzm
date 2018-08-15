@@ -28,6 +28,177 @@ client.user.setGame(`-___________________________-`,"http://twitch.tv/S-F")
   console.log('')
 });
 
+  client.on('message', message => {
+  if (message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return;
+
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
+
+  let args = message.content.split(" ").slice(1);
+
+  if (command === "Bb") {
+    let numArray = args.map(n=> parseInt(n));
+    let total = numArray.reduce( (p, c) => p+c);
+
+    message.channel.sendMessage(total).catch(console.error);
+  }
+  
+
+  });
+
+
+
+
+
+
+
+    client.on('message', message => {
+     if (message.content === "^botnachr") {
+     let embed = new Discord.RichEmbed()
+  .setThumbnail(message.author.avatarURL)  
+  .setAuthor(message.author.username)
+                                          .setFooter(`© SNIPERSKY ™.`, 'https://i.imgur.com/R866cNR.png')
+  .setColor("#9B59B6")
+ 
+  .addField('بوت نشر', message.author.bot)
+  
+     
+     
+  message.channel.sendEmbed(embed);
+    }
+});
+
+var dat = JSON.parse("{}");
+	function forEachObject(obj, func) {
+	    Object.keys(obj).forEach(function (key) { func(key, obj[key]) });
+	}
+client.on("ready", () => {
+    var guild;
+    while (!guild)
+        guild = client.guilds.find("name", "ﾌղ | Old School")
+    guild.fetchInvites().then((data) => {
+        data.forEach((Invite, key, map) => {
+            var Inv = Invite.code;
+            dat[Inv] = Invite.uses;
+        })
+    })
+});
+
+client.on("guildMemberAdd", (member) => {
+    let channel = member.guild.channels.find('name', 'chat');
+    if (!channel) {
+        console.log("!channel fails");
+        return;
+    }
+    if (member.id == client.user.id) {
+        return;
+    }
+    console.log('made it till here!');
+    var guild;
+    while (!guild)
+        guild = client.guilds.find("name", "ﾌղ | Old School")
+    guild.fetchInvites().then((data) => {
+        data.forEach((Invite, key, map) => {
+            var Inv = Invite.code;
+            if (dat[Inv])
+                if (dat[Inv] < Invite.uses) {
+                    console.log(3);
+                    console.log(`${member} joined over ${Invite.inviter}'s invite ${Invite.code}`)
+ channel.send(` :hearts: **تم دعوته من قبل ${Invite.inviter} :hearts: 
+:hearts: رابط الدعوه --> https://discord.gg/${Invite.code} :hearts:
+:hearts: عضو رقم --> ${member.guild.memberCount} :hearts: **`)            
+ }
+            dat[Inv] = Invite.uses;
+        })
+    })
+});
+
+
+
+
+   client.on('message', message => {
+     if (message.content === "^help") {
+message.author.send(".Best Commands" + `  **
+
+
+ ".General Commands"
+:wrench:                 ^ping                 |                سرعة الأتصال              |      
+:wrench:                 ^id                      | معلومــات عــن حســابــك              |     
+:wrench:                 ^say                   |    يكرر الكلام الذي تقولة                |
+:wrench:                 ^avatar              |        صورتك في الدسكورد            |
+:wrench:                 ^embed            |   يكرر الكلام بطريقة أخرى           |
+:wrench:                 ^animal            |       يعطيك صورة حيوانات            |
+:wrench:                 ^image             |        يعطيك صورة السرفر              |
+:wrench:                   ^mute             |                اعطاء ميو                      |
+:wrench:                 ^unmute          |                فك الميوت                      |
+:wrench:                 ^spam              |                     سبام                          |
+:wrench:                 ^clear               |              حذف الرسائل                    |
+:wrench:                 ^server            |    معلومات عن السيرفر                   |
+:wrench:                 ^bcall               |            يرسل برودكاست                 |
+:wrench:                 ^bot                  |        معلومات عن البوت                  |
+:wrench:                 ^bc1                  |            يرسل بردكاست لسارفر        |
+:wrench:                 ^colors create  |يسوي 200 لون |
+
+🔧       تم الدعوة من قبل
+🔧       تبنيد بسسب النشر 
+
+⚙            youtube :SNIPERSKY
+
+
+
+ 
+**`);
+    }
+});
+
+
+
+// ^ping
+   client.on('message', message => {
+     if (message.content === "^ping") {
+      const embed = new Discord.RichEmbed()
+ 
+  .setColor("#FF0000")
+  .addField('``سرعة أتصال الــبوت`` ' , `${Date.now() - message.createdTimestamp}` + ' ms`')
+
+  message.channel.sendEmbed(embed);
+    }
+});
+
+// ^say
+var prefix = "^";
+client.on('message', message => {
+  if (message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return;
+
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
+
+  let args = message.content.split(" ").slice(1);
+
+// ^say
+  if (command === "say") {
+          message.delete()
+    message.channel.sendMessage(args.join(" ")).catch(console.error);
+  }
+  
+ 
+
+if (command == "embed") {
+    let say = new Discord.RichEmbed()
+  .setThumbnail(message.author.avatarURL)  
+  .setAuthor(message.author.username)
+    .setDescription(args.join("  "))
+    .setColor(0x00AE86)
+    message.channel.sendEmbed(say);
+    message.delete();
+  }
+
+
+});
+
+ 
     client.on('message', message => {
      if (message.content === "^server") {
  var servername = message.guild.name;
@@ -394,27 +565,6 @@ client.on('message', message => {
 
 
 
-client.on('guildMemberAdd', member => {
-    let channel = member.guild.channels.find('name', 'chat');
-    let memberavatar = member.user.avatarURL
-      if (!channel) return;
-    let embed = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .setThumbnail(memberavatar)
-        .addField(':running_shirt_with_sash: | name :  ',`${member}`)
-        .addField(':loudspeaker: | نورت السيرفر يا قلبي' , `Welcome to the server, ${member}`)
-        .addField(':id: | user :', "**[" + `${member.id}` + "]**" )
-                .addField('➡| انت العضو رقم',`${member.guild.memberCount}`)
-               
-                  .addField("Name:",`<@` + `${member.id}` + `>`, true)
-                     
-                                     .addField(' الـسيرفر', `${member.guild.name}`,true)
-                                       
-     .setFooter(`${member.guild.name}`)
-        .setTimestamp()
-   
-      channel.sendEmbed(embed);
-    });
     
     client.on('guildMemberRemove', member => {
         var embed = new Discord.RichEmbed()
@@ -479,27 +629,6 @@ client.on("guildMemberAdd", (member) => {
         })
     })
 });
-
-
-
-
-
-
-
-    	client.on("message", (message) => {//           
-		    if (message.channel.type === "dm") {     
-		if (message.author.id === client.user.id) return;      // 
-		let SNIPERSKY = new Discord.RichEmbed()   
-			    .setTimestamp()   
-			    .setTitle("Direct Message To The Bot")      
-			    .addField(`Sent By:`, `<@${message.author.id}>`)    
-			    .setColor("RANDOM")     // 
-			    .setThumbnail(message.author.displayAvatarURL)    
-			    .addField(`Message: `, `\n\n\`\`\`${message.content}\`\`\``)    // 
-			    .setFooter(` Robot Messages |  Logs`)   
-			client.users.get("302027636001996810").send(SNIPERSKY)   
-		    }
-	});
 
 
 client.login(process.env.BOT_TOKEN);
